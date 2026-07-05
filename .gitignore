@@ -1,0 +1,30 @@
+# Compiled binaries (built from source with `make` on Linux)
+src/task1/frontend
+src/task1/backend
+src/task2/sandbox
+src/task2/benign
+src/task2/cpu_hog
+src/task2/fork_bomb
+src/task2/ignore_sigterm
+src/task2/test_binary
+src/task1/malicious_client
+src/malicious_client
+
+# Object files and build output
+*.o
+*.out
+*.so
+*.a
+
+# Runtime artefacts (regenerated on every run)
+src/task1/auth.log
+/tmp/auth_socket
+
+# Editor / OS noise
+*~
+*.swp
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+~$*.docx
