@@ -1,0 +1,14 @@
+# These programs are built on Linux — keep LF endings in the repository and
+# in the working tree so Makefiles and shell snippets are not broken by CRLF.
+* text=auto eol=lf
+
+*.c      text eol=lf
+*.h      text eol=lf
+*.md     text eol=lf
+*.txt    text eol=lf
+*.log    text eol=lf
+Makefile text eol=lf
+
+*.png    binary
+*.docx   binary
+*.pdf    binary
