@@ -1,0 +1,32 @@
+---- Execution finished at Thu Jul 30 06:47:43 2026
+Target binary : ./benign
+Child PID     : 97227
+Verdict       : EXITED (exit code 0)
+Total runtime : 1.00s
+Peak CPU time : 0.00s
+Peak memory   : 1408KB
+
+---- Execution finished at Thu Jul 30 06:47:49 2026
+Target binary : ./cpu_hog
+Child PID     : 97239
+Verdict       : KILLED (signal 9 / Killed)
+Total runtime : 5.06s
+Peak CPU time : 5.00s
+Peak memory   : 1236KB
+
+---- Execution finished at Thu Jul 30 06:47:54 2026
+Target binary : ./fork_bomb
+Child PID     : 97291
+Verdict       : KILLED (signal 9 / Killed)
+Total runtime : 5.08s
+Peak CPU time : 4.82s
+Peak memory   : 1568KB
+
+---- Execution finished at Thu Jul 30 06:47:59 2026
+Target binary : ./ignore_sigterm
+Child PID     : 97336
+Verdict       : KILLED (signal 9 / Killed)
+Total runtime : 5.09s
+Peak CPU time : 0.00s
+Peak memory   : 1380KB
+
