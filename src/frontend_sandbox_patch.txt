@@ -1,0 +1,62 @@
+========================================================================
+ INTERCONNECTION PATCH (Option A: login gates the sandbox)
+ Add this to frontend.c to link Task 1 (auth) -> Task 2 (sandbox).
+========================================================================
+
+STEP 1 -- add this include near the top of frontend.c, with the others:
+
+    #include <sys/wait.h>
+
+STEP 2 -- AFTER the line in frontend.c that prints the authentication
+result (the "Authentication Result: %s" line), paste this block.
+Replace `response` with whatever your code names the reply from backend.
+
+------------------------------------------------------------------------
+if (strcmp(response, "SUCCESS") == 0) {
+    printf("\n[frontend] Access granted. Launching sandbox...\n\n");
+    fflush(stdout);
+
+    pid_t pid = fork();                 /* Task 1 hands off to Task 2 */
+    if (pid == 0) {
+        /* child: run the Task 2 sandbox you already built */
+        execl("./sandbox", "sandbox", (char *)NULL);
+        perror("execl sandbox");        /* only reached if exec fails */
+        exit(1);
+    } else if (pid > 0) {
+        int status;
+        waitpid(pid, &status, 0);
+        printf("\n[frontend] Sandbox session finished. See sandbox.log.\n");
+    } else {
+        perror("fork");
+    }
+} else {
+    printf("\n[frontend] Access denied. Not authorized to use the sandbox.\n");
+}
+------------------------------------------------------------------------
+
+If your sandbox takes the target binary as an argument instead of a
+hard-coded name, use this exec line instead:
+
+    execl("./sandbox", "sandbox", "./test_binary", (char *)NULL);
+
+========================================================================
+ BUILD AND RUN
+========================================================================
+
+    cp ~/sandbox/sandbox      ~/Task1/
+    cp ~/sandbox/test_binary  ~/Task1/
+    cd ~/Task1
+    gcc -Wall -Wextra frontend.c -o frontend
+
+    # Terminal 1:
+    ./backend
+
+    # Terminal 2:
+    ./frontend
+    #   admin / Password123 -> SUCCESS   -> sandbox runs, contains test_binary
+    #   admin / wrongpass   -> Access denied, sandbox never starts
+
+Screenshots to capture:
+  1. Correct login -> "Access granted" -> sandbox kills test_binary
+  2. Wrong login   -> "Access denied", sandbox never runs
+  3. cat sandbox.log  (containment record, produced only after auth)
